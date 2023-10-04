@@ -57,6 +57,7 @@
     "pagination": {
       "load_more": "Load more",
       "loading_more": "Loading more",
+      "load_previous": "Load previous page",
       "show": "Showing",
       "of": "of"
     },

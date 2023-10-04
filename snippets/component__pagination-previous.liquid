@@ -1,0 +1,24 @@
+<section id="collection-previous-btn" class="border--t-width pt-4
+    {{ settings.layout_horizontal }}"
+    x-data="{ button_loading: false }" 
+    x-init="pagination_total_pages = {{ paginate.pages }};">
+    <div class="mt-2 text-center" 
+      x-show="pagination_current_page < pagination_total_pages" 
+      x-cloak>
+      <button role="button" 
+        class="btn btn--small btn--load btn--secondary"  
+        :class="{ 'btn--loading' : button_loading }"
+        :disabled="button_loading"
+        @click="
+        fetchAndRenderPreviousPage() 
+          button_loading = true;
+          setTimeout(function(){ button_loading = false}, 1000);">
+        <div class="btn__content">
+          {{ 'general.pagination.load_previous' | t }}
+        </div>
+        <div class="btn__spinner">
+          {% render 'component__icon', icon: 'spinner', size: '24', class: '' %}
+        </div>
+      </button>
+    </div>
+  </section>

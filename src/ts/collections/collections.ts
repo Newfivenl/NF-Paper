@@ -184,6 +184,10 @@ export const collections = {
 
       // get pagination count
       let pageUrl = "&page=" + (this.pagination_current_page + 1);
+      
+      // For updating the url with correct page
+      let pageToPush = "all?page=" + (this.pagination_current_page + 1);
+      window.history.pushState("", "", pageToPush);
 
       // get search thingy
       let searchUrl = new URL(location.href).searchParams.get("q");
@@ -236,5 +240,81 @@ export const collections = {
       this.collection_loading = false;
     }
   },
+ 
+  // Added for previous button
+  fetchAndRenderPreviousPage: function() {
+    // check if new page is available
+    if (this.pagination_current_page < this.pagination_total_pages) {
+      // show loading
+      this.collection_loading = true;
+
+      // get filter data
+      let filter = document.getElementById("js:desktopFilter");
+
+      // get pagination count
+      let pageUrl = "&page=" + (this.pagination_current_page - 1);
+      console.log(pageUrl)
+      
+      // For updating the url with correct page
+      let pageToPush = "all?page=" + (this.pagination_current_page - 1);
+      let pageNumber = this.pagination_current_page - 1;
+      if(this.pagination_current_page >1) {
+        window.history.pushState("", "", pageToPush);
+      }
+      if(pageNumber == 1) {
+        document.querySelector("#collection-previous-btn").remove();
+      }
+      console.log(this.pagination_current_page)
+
+      // get search thingy
+      let searchUrl = new URL(location.href).searchParams.get("q");
+      searchUrl = "&q=" + searchUrl;
+
+      // build fetch url
+      let fetchUrl = "";
+      if (filter) {
+        let filterData = new FormData(filter);
+        let filterUrl = this.buildUrlFilter(filterData);
+
+        fetchUrl =
+          window.location.pathname +
+          "?section_id=" +
+          this.pagination_section +
+          filterUrl +
+          pageUrl +
+          searchUrl;
+      } else {
+        fetchUrl =
+          window.location.pathname +
+          "?section_id=" +
+          this.pagination_section +
+          pageUrl +
+          searchUrl;
+      }
+
+      // load new page with filters and sort
+      fetch(fetchUrl)
+        .then((response) => response.text())
+        .then((responseText) => {
+          // extract products and inject into grid
+          let html = document.createElement("div");
+          html.innerHTML = responseText;
+          let htmlCleaned = html.querySelector("#js\\:results").innerHTML;
+          document.getElementById("js:results").innerHTML = htmlCleaned;
+          setTimeout(() => {
+            this.collection_loading = false;
+          }, 100);
+
+          // update next page url
+          this.pagination_current_page = this.pagination_current_page - 1;
+          console.log(this.pagination_current_page)
+        });
+    }
+
+    // if last pgae
+    else {
+      this.collection_loading = false;
+    }
+  }
 
 };

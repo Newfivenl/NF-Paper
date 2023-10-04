@@ -829,6 +829,8 @@ const collections = {
       this.collection_loading = true;
       let filter = document.getElementById("js:desktopFilter");
       let pageUrl = "&page=" + (this.pagination_current_page + 1);
+      let pageToPush = "all?page=" + (this.pagination_current_page + 1);
+      window.history.pushState("", "", pageToPush);
       let searchUrl = new URL(location.href).searchParams.get("q");
       searchUrl = "&q=" + searchUrl;
       let fetchUrl = "";
@@ -848,6 +850,47 @@ const collections = {
           this.collection_loading = false;
         }, 100);
         this.pagination_current_page = this.pagination_current_page + 1;
+      });
+    } else {
+      this.collection_loading = false;
+    }
+  },
+  // Added for previous button
+  fetchAndRenderPreviousPage: function() {
+    if (this.pagination_current_page < this.pagination_total_pages) {
+      this.collection_loading = true;
+      let filter = document.getElementById("js:desktopFilter");
+      let pageUrl = "&page=" + (this.pagination_current_page - 1);
+      console.log(pageUrl);
+      let pageToPush = "all?page=" + (this.pagination_current_page - 1);
+      let pageNumber = this.pagination_current_page - 1;
+      if (this.pagination_current_page > 1) {
+        window.history.pushState("", "", pageToPush);
+      }
+      if (pageNumber == 1) {
+        document.querySelector("#collection-previous-btn").remove();
+      }
+      console.log(this.pagination_current_page);
+      let searchUrl = new URL(location.href).searchParams.get("q");
+      searchUrl = "&q=" + searchUrl;
+      let fetchUrl = "";
+      if (filter) {
+        let filterData = new FormData(filter);
+        let filterUrl = this.buildUrlFilter(filterData);
+        fetchUrl = window.location.pathname + "?section_id=" + this.pagination_section + filterUrl + pageUrl + searchUrl;
+      } else {
+        fetchUrl = window.location.pathname + "?section_id=" + this.pagination_section + pageUrl + searchUrl;
+      }
+      fetch(fetchUrl).then((response) => response.text()).then((responseText) => {
+        let html = document.createElement("div");
+        html.innerHTML = responseText;
+        let htmlCleaned = html.querySelector("#js\\:results").innerHTML;
+        document.getElementById("js:results").innerHTML = htmlCleaned;
+        setTimeout(() => {
+          this.collection_loading = false;
+        }, 100);
+        this.pagination_current_page = this.pagination_current_page - 1;
+        console.log(this.pagination_current_page);
       });
     } else {
       this.collection_loading = false;

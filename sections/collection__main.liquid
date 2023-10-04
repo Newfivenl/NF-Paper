@@ -24,7 +24,15 @@
     {% render 'collection__sublinks' %}
     {% render 'collection__subtags' %}
     {% render 'component__collection-filter' %}
-    
+   
+    {% paginate collection.products by section.settings.products_per_page %}
+      {%- if paginate.parts.size > 0 -%}
+          {%- if paginate.previous -%}
+            {%  render 'component__pagination-previous' %}
+          {%- endif -%}
+      {%- endif -%}
+    {% endpaginate %}
+   
     {% paginate collection.products by section.settings.products_per_page %}
       <section id="js:results" 
         class="grid animation-500 pb-8
@@ -77,7 +85,7 @@
           {% render 'component__product-item', product: product, source: 'col_main' %}
         {% endfor %}
       </section>
-
+      
       {% if collection.all_products_count == 0 %}
         <section class="py-8 text-center">
           <span>{{ 'collections.general.no_matches' | t }}</span>
