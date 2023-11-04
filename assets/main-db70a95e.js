@@ -829,7 +829,7 @@ const collections = {
       this.collection_loading = true;
       let filter = document.getElementById("js:desktopFilter");
       let pageUrl = "&page=" + (this.pagination_current_page + 1);
-      let pageToPush = "all?page=" + (this.pagination_current_page + 1);
+      let pageToPush = "?page=" + (this.pagination_current_page + 1);
       window.history.pushState("", "", pageToPush);
       let searchUrl = new URL(location.href).searchParams.get("q");
       searchUrl = "&q=" + searchUrl;
@@ -862,7 +862,7 @@ const collections = {
       let filter = document.getElementById("js:desktopFilter");
       let pageUrl = "&page=" + (this.pagination_current_page - 1);
       console.log(pageUrl);
-      let pageToPush = "all?page=" + (this.pagination_current_page - 1);
+      let pageToPush = "?page=" + (this.pagination_current_page - 1);
       let pageNumber = this.pagination_current_page - 1;
       if (this.pagination_current_page > 1) {
         window.history.pushState("", "", pageToPush);

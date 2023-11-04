@@ -184,9 +184,9 @@ export const collections = {
 
       // get pagination count
       let pageUrl = "&page=" + (this.pagination_current_page + 1);
-      
+
       // For updating the url with correct page
-      let pageToPush = "all?page=" + (this.pagination_current_page + 1);
+      let pageToPush = "?page=" + (this.pagination_current_page + 1);
       window.history.pushState("", "", pageToPush);
 
       // get search thingy
@@ -256,7 +256,7 @@ export const collections = {
       console.log(pageUrl)
       
       // For updating the url with correct page
-      let pageToPush = "all?page=" + (this.pagination_current_page - 1);
+      let pageToPush = "?page=" + (this.pagination_current_page - 1);
       let pageNumber = this.pagination_current_page - 1;
       if(this.pagination_current_page >1) {
         window.history.pushState("", "", pageToPush);

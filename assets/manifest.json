@@ -1,22 +1,12 @@
 {
-<<<<<<< HEAD
   "src/entrypoints/main.js": {
-    "file": "main-2b346939.js",
-=======
-  "src\/entrypoints\/main.js": {
-    "file": "main-bb62f9ba.js",
->>>>>>> 94b41e6655743bdfd018962bc46521b8ff1df63a
+    "file": "main-db70a95e.js",
     "isEntry": true,
-    "src": "src\/entrypoints\/main.js"
+    "src": "src/entrypoints/main.js"
   },
-<<<<<<< HEAD
   "src/entrypoints/styles.css": {
     "file": "styles-a18c8f9d.css",
-=======
-  "src\/entrypoints\/styles.css": {
-    "file": "styles-dafdffb5.css",
->>>>>>> 94b41e6655743bdfd018962bc46521b8ff1df63a
     "isEntry": true,
-    "src": "src\/entrypoints\/styles.css"
+    "src": "src/entrypoints/styles.css"
   }
 }
